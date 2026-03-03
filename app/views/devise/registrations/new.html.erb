@@ -1,0 +1,54 @@
+<div class="min-h-[calc(100vh-4rem)] flex items-center justify-center">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow p-8 border border-gray-100">
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">Créer un compte</h1>
+      <p class="text-sm text-gray-500 mt-1">Crée ton compte MonCoach en 30 secondes.</p>
+    </div>
+
+    <% if resource.errors.any? %>
+      <div class="mb-4 p-3 rounded-lg bg-red-50 text-red-700 border border-red-200">
+        <div class="font-semibold mb-1"><%= resource.errors.count %> erreur(s)</div>
+        <ul class="list-disc list-inside">
+          <% resource.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <div class="space-y-4">
+        <div>
+          <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                class: "mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+
+        <div>
+          <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.password_field :password, autocomplete: "new-password",
+                class: "mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+          <% if @minimum_password_length %>
+            <p class="text-xs text-gray-500 mt-1">Minimum <%= @minimum_password_length %> caractères.</p>
+          <% end %>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password",
+                class: "mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+
+        <div>
+          <%= f.submit "Créer mon compte",
+                class: "w-full bg-blue-600 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-700 transition" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="mt-6 text-sm text-gray-600">
+      Déjà un compte ?
+      <%= link_to "Se connecter", new_session_path(resource_name), class: "text-blue-600 hover:text-blue-700 font-medium" %>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,31 @@
-// Graphical variables
+// =====================================================
+// GRAPHICAL VARIABLES
+// =====================================================
 @import "config/fonts";
 @import "config/colors";
 @import "config/bootstrap_variables";
 
-// External libraries
+// =====================================================
+// EXTERNAL LIBRARIES
+// =====================================================
 @import "bootstrap";
 @import "font-awesome";
 
-// Your CSS partials
+// =====================================================
+// YOUR CUSTOM PARTIALS
+// =====================================================
 @import "components/index";
 @import "pages/index";
+
+// Navbar styles
+@import "navbar";
+
+// =====================================================
+// TAILWIND
+// =====================================================
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+}

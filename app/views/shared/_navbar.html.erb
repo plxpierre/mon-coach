@@ -1,0 +1,109 @@
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+
+      <!-- Logo -->
+      <div class="flex items-center">
+        <%= link_to programs_path, class: "flex items-center group" do %>
+          <div class="bg-blue-600 group-hover:bg-blue-700 p-2 rounded-lg transition-colors duration-300">
+            <i class="fas fa-dumbbell text-white text-xl"></i>
+          </div>
+          <span class="ml-3 text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors duration-300">
+            MonCoach
+          </span>
+        <% end %>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-2">
+        <%= link_to programs_path,
+          class: "nav-link text-gray-700 hover:text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition" do %>
+          <i class="fas fa-home mr-2"></i>
+          Home
+        <% end %>
+
+        <%= link_to new_program_path,
+          class: "nav-link text-gray-700 hover:text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition" do %>
+          <i class="fas fa-plus mr-2"></i>
+          Créer un programme
+        <% end %>
+      </div>
+
+      <!-- Right Section -->
+      <div class="flex items-center space-x-3">
+        <div class="hidden md:block h-6 w-px bg-gray-200"></div>
+
+        <div class="dropdown relative">
+          <button class="flex items-center space-x-2 focus:outline-none group" type="button">
+            <div class="h-9 w-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 avatar-ring">
+              <i class="fas fa-user"></i>
+            </div>
+
+            <div class="hidden lg:flex flex-col items-start">
+              <% if user_signed_in? %>
+                <span class="text-sm font-medium text-gray-700 group-hover:text-blue-600">
+                  <%= current_user.username.presence || current_user.email %>
+                </span>
+              <% else %>
+                <span class="text-sm font-medium text-gray-700">
+                  Guest
+                </span>
+              <% end %>
+            </div>
+
+            <i class="fas fa-chevron-down text-xs text-gray-500 hidden lg:inline"></i>
+          </button>
+
+          <div class="dropdown-menu absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl py-1 z-50 opacity-0 invisible transition-all duration-300 transform -translate-y-2 border border-gray-100">
+            <% if user_signed_in? %>
+              <%= link_to destroy_user_session_path,
+                data: { turbo_method: :delete },
+                class: "block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 flex items-center" do %>
+                <i class="fas fa-sign-out-alt mr-3"></i>
+                Sign out
+              <% end %>
+            <% else %>
+              <%= link_to new_user_session_path,
+                class: "block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 flex items-center" do %>
+                <i class="fas fa-sign-in-alt mr-3"></i>
+                Sign in
+              <% end %>
+
+              <%= link_to new_user_registration_path,
+                class: "block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 flex items-center" do %>
+                <i class="fas fa-user-plus mr-3"></i>
+                Sign up
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+        <button id="mobile-menu-button"
+                class="md:hidden p-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-100"
+                aria-expanded="false"
+                type="button">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu"
+       class="mobile-menu hidden md:hidden bg-white border-t border-gray-200">
+    <div class="px-2 pt-2 pb-4 space-y-1">
+
+      <%= link_to programs_path,
+        class: "block px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center" do %>
+        <i class="fas fa-home mr-3"></i>
+        Home
+      <% end %>
+
+      <%= link_to new_program_path,
+        class: "block px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center" do %>
+        <i class="fas fa-plus mr-3"></i>
+        Créer un programme
+      <% end %>
+    </div>
+  </div>
+</nav>
