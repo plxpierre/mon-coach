@@ -4,6 +4,7 @@ class ProgramsController < ApplicationController
   end
 
   def show
+    raise
     @program = Program.find(params[:id])
   end
 
@@ -16,7 +17,7 @@ class ProgramsController < ApplicationController
     @program.user = current_user
 
     if @program.save
-      @chat = Chat.create(program: @program)
+
       #appel à l'ia
       redirect_to @program, notice: "program was successfully created"
     else
