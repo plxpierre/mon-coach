@@ -24,9 +24,10 @@ A Goal: section
 
 Adapt intensity, progression, and exercises to the provided level and constraints.
 
-Start your response with: {
 Must be a valid JSON
+week_program must be an array
 Expected structure:
+Start your response with: {
 
 {
 'title': 'Program Title',
@@ -67,7 +68,7 @@ Expected structure:
     ruby_llm_chat = RubyLLM.chat
     response = ruby_llm_chat.with_instructions(SYSTEM_PROMPT).ask(program_params.to_s)
     response = JSON.parse(response.content)
-    @program = Program.new({ title: response["title"],user: current_user }.merge(program_params))
+    @program = Program.new({ title: response["title"], user: current_user }.merge(program_params))
     if @program.save
       response["weeks"].each do |week|
         @program.weeks.create(week)

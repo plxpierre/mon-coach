@@ -1,18 +1,17 @@
-<% data = JSON.parse(@program.weeks) %>
 
 <div class="max-w-2xl mx-auto p-4 py-10 font-sans">
 
-  <h1 class="text-2xl font-bold mb-8 text-gray-900"><%= data["title"] %></h1>
+  <h1 class="text-2xl font-bold mb-8 text-gray-900"><%= @program.title %></h1>
 
   <div class="space-y-10">
-    <% data["weeks"].each do |week| %>
+    <% @program.weeks.each do |week| %>
       <section>
         <h2 class="text-sm font-black uppercase tracking-widest text-blue-600 mb-4">
-          Semaine <%= week["week_number"] %>
+          Semaine <%= week.week_number %>
         </h2>
 
         <div class="space-y-4">
-          <% week["week_program"].each do |seance| %>
+          <% week.week_program.each do |seance| %>
             <div class="p-5 bg-gray-50 rounded-lg border border-gray-100 whitespace-pre-line text-gray-700 leading-relaxed">
               <%= seance %>
             </div>
@@ -21,9 +20,9 @@
       </section>
     <% end %>
   </div>
-
+</div>
 <div class="mb-6 p-3">
-  <%= link_to programs_path, class: "text-gray-500 hover:text-red-600 transition flex items-center gap-2 text-sm font-medium" do %>
+  <%= link_to programs_path, class:"text-gray-500 hover:text-red-600 transition flex items-center gap-2 text-sm font-medium" do %>
     <span>←</span>  Back
   <% end %>
 </div>
@@ -33,5 +32,5 @@
       program_path(@program),
       method: :delete,
       data: { turbo_confirm: "Delete ?" },
-      class: "text-sm text-red-600 hover:underline" %>
+      class:"text-sm text-red-600 hover:underline" %>
 </div>
