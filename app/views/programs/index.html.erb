@@ -1,12 +1,32 @@
+<%# <h1 class="text-2xl font-bold mb-6">Mes programmes</h1> %>
+<%# <%= link_to "Créer un programme", %>
+    <%# new_program_path, %>
+    <%# class:"bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition" %>
+<%# <ul class="mt-6 space-y-2"> %>
+  <%# <% @programs.each do |program| %>
+    <%# <li class="p-4 bg-white rounded shadow"> %>
+      <%# <%= program.title.presence || "Programme ##{program.id}" %> 
+    <%# </li> %>
+  <%# <% end %>
+<%# </ul> %>
+<%# <input type="checkbox" value="synthwave" class="toggle theme-controller" /> %>
+
 <h1 class="text-2xl font-bold mb-6">Mes programmes</h1>
+
 <%= link_to "Créer un programme",
     new_program_path,
-    class:"bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition" %>
+    class:"bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition inline-block" %>
+
 <ul class="mt-6 space-y-2">
   <% @programs.each do |program| %>
-    <li class="p-4 bg-white rounded shadow">
-      <%= program.title.presence || "Programme ##{program.id}" %>
+    <% # On met le link_to à l'intérieur du <li> pour garder ton style de card %>
+    <li class="bg-white rounded shadow hover:bg-gray-50 transition">
+      <%= link_to program_path(program), class: "block p-4" do %>
+        <%= program.sport&.capitalize || "Programme" %> :
+        <%= program.goal.presence || "##{program.id}" %>
+      <% end %>
     </li>
   <% end %>
 </ul>
-<input type="checkbox" value="synthwave" class="toggle theme-controller" />
+
+<input type="checkbox" value="synthwave" class="toggle theme-controller mt-10" />

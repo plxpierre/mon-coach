@@ -4,7 +4,6 @@ class ProgramsController < ApplicationController
   end
 
   def show
-    raise
     @program = Program.find(params[:id])
   end
 
