@@ -78,6 +78,12 @@ Expected structure:
     end
   end
 
+  def destroy
+    @program = Program.find(params[:id])
+    @program.destroy
+    # On redirige vers l'index avec un message de succès
+    redirect_to programs_path, notice: "Programme supprimé.", status: :see_other
+  end
   private
 
 
