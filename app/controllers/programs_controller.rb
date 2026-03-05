@@ -21,9 +21,11 @@ Each session must be a string in Markdown format with:
 
 A title formatted as: '### Day: Session Name'
 
-A Structure: section
+A short introductory paragraph describing the session.
 
-A Goal: section
+A bullet list of the exercises and sequence.
+
+A final sentence explaining the purpose of the session.
 
 Adapt intensity, progression, and exercises to the provided level and constraints.
 
@@ -38,17 +40,17 @@ Start your response with: {
 {
 'week_number': 1,
 'week_program': [
-'### Monday: Session Name\n\nDescription...\n\n**Structure:**\n- ...\n\n**Goal:** ...',
-'### Wednesday: Session Name\n\nDescription...\n\n**Structure:**\n- ...\n\n**Goal:** ...',
-'### Friday: Session Name\n\nDescription...\n\n**Structure:**\n- ...\n\n**Goal:** ...'
+'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
+'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
+'### **Friday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...'
 ]
 },
 {
 'week_number': 2,
 'week_program': [
-'### Monday: Session Name\n\nDescription...\n\n**Structure:**\n- ...\n\n**Goal:** ...',
-'### Wednesday: Session Name\n\nDescription...\n\n**Structure:**\n- ...\n\n**Goal:** ...',
-'### Friday: Session Name\n\nDescription...\n\n**Structure:**\n- ...\n\n**Goal:** ...'
+'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
+'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
+'### Friday: Session Name\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...'
 ]
 }
 ]
@@ -69,7 +71,7 @@ Start your response with: {
 
   def create
     ruby_llm_chat = RubyLLM.chat
-    response = ruby_llm_chat.with_instructions(SYSTEM_PROMPT).ask(program_params.to_s)
+    response = ruby_llm_chat.with_instructions(SYSTEM_PROMPT).ask(llm_input.to_s)
     response = JSON.parse(response.content)
     @program = Program.new({ title: response["title"], user: current_user }.merge(program_params))
     if @program.save
@@ -95,4 +97,11 @@ Start your response with: {
   def program_params
     params.require(:program).permit(:goal, :level, :medical_conditions, :number_of_week, :sport, :tools)
   end
+
+  def llm_input = program_params.to_h.merge(
+  height: current_user.height,
+  age: current_user.age,
+  weight: current_user.weight,
+  gender: current_user.gender,
+)
 end
