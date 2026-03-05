@@ -42,6 +42,8 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
+gem "ruby_llm", "~> 1.2.0"
+
 group :development, :test do
     gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -68,7 +70,10 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "font-awesome-sass", "~> 6.1"
 gem "simple_form", github: "heartcombo/simple_form"
 gem "devise"
 gem 'simple_form-tailwind'
+gem 'kramdown', '~> 2.5'
+
+
+gem "json", "~> 2.18"
