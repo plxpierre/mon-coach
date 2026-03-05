@@ -67,16 +67,17 @@
       </div>
       <%# Bottom: animated progress (micro-interaction on appearance) %>
       <div class="relative mt-auto pt-5">
+        <% progress = rand(20..100) %>
         <div class="flex items-center justify-between text-xs opacity-70">
           <span>Progress</span>
-          <span class="font-semibold">70%</span>
+          <span class="font-semibold"><%= progress %>%</span>
         </div>
         <%# We animate a custom fill bar to get "on appear" animation without JS %>
         <div class="mt-2 h-2 w-full rounded-full bg-base-200/60 border border-base-300 overflow-hidden">
           <div
             class="h-full rounded-full bg-primary"
             style="
-              width: 70%;
+              width: <%= progress %>%;
               transform-origin: left;
               animation: mcFill 900ms cubic-bezier(.2,.8,.2,1) both;
             ">
