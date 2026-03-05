@@ -28,8 +28,7 @@
         opacity-70 group-hover:opacity-90
         group-hover:scale-[1.03]
       ">
-        <i class="fa-solid fa-person-swimming text-primary/30 text-[140px]"></i>
-      </div>
+        <i class="fa-solid <%= sport_icon(program.sport.to_sym) %> text-primary/30 text-[140px]"></i>      </div>
       <%# Top row: level + difficulty chip (replaces radial) %>
       <div class="relative flex items-start justify-between gap-3">
         <span class="badge badge-neutral font-semibold">
@@ -53,7 +52,7 @@
             transition-transform duration-300
             group-hover:scale-[1.03]
           ">
-            <i class="fa-solid fa-person-swimming text-xl text-primary"></i>
+            <i class="fa-solid <%= sport_icon(program.sport.to_sym) %> text-xl text-primary"></i>
           </span>
           <div class="min-w-0">
             <h2 class="text-lg font-semibold leading-tight truncate">

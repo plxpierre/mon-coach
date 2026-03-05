@@ -40,17 +40,17 @@ Start your response with: {
 {
 'week_number': 1,
 'week_program': [
-'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
-'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
-'### **Friday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...'
+'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
+'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
+'### **Friday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...'
 ]
 },
 {
 'week_number': 2,
 'week_program': [
-'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
-'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
-'### Friday: Session Name\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...'
+'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
+'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
+'### Friday: Session Name\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...'
 ]
 }
 ]
