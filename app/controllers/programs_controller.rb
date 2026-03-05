@@ -25,6 +25,8 @@ A short introductory paragraph describing the session.
 
 A bullet list of the exercises and sequence.
 
+A final sentence explaining the purpose of the session.
+
 Adapt intensity, progression, and exercises to the provided level and constraints.
 
 Must be a valid JSON
@@ -38,17 +40,17 @@ Start your response with: {
 {
 'week_number': 1,
 'week_program': [
-'### Monday: Session Name\n\nDescription...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
-'### Wednesday: Session Name\n\nDescription...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
-'### Friday: Session Name\n\nDescription...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...'
+'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
+'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
+'### **Friday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...'
 ]
 },
 {
 'week_number': 2,
 'week_program': [
-'### Monday: Session Name\n\nDescription...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
-'### Wednesday: Session Name\n\nDescription...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
-'### Friday: Session Name\n\nDescription...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...'
+'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
+'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...',
+'### Friday: Session Name\n\n**Description**...\n\n**Exercises :**\n- ...\n\nFinal sentence  ...'
 ]
 }
 ]

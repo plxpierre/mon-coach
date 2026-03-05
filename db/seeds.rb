@@ -18,6 +18,7 @@ User.create!(email: "aude@gmail.com", password: "123456", username: "Aude", weig
 User.create!(email: "nicolas@gmail.com", password: "123456", username: "Nicolas", weight: 65, height: 174, age: 33, gender: "Man")
 User.create!(email: "pierre@gmail.com", password: "123456", username: "Pierre", weight: 77, height: 185, age: 29, gender: "Man")
 User.create!(email: "test@test.fr", password: "password", username: "Pierre", weight: 77, height: 185, age: 29, gender: "Man")
+User.create!(email: "oldman@test.fr", password: "password", username: "Pierre", weight: 77, height: 185, age: 95, gender: "Man")
 
 
 puts "Crating complete"
