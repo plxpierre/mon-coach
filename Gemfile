@@ -75,4 +75,3 @@ gem "devise"
 gem 'simple_form-tailwind'
 gem 'kramdown', '~> 2.5'
 gem "json", "~> 2.18"
-
