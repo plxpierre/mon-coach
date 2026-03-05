@@ -74,6 +74,5 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "devise"
 gem 'simple_form-tailwind'
 gem 'kramdown', '~> 2.5'
-
-
 gem "json", "~> 2.18"
+
