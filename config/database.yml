@@ -89,6 +89,7 @@ production:
     <<: *default
     database: mon_coach_production
     username: mon_coach
+    url: <%= ENV["DATABASE_URL"] %>
     password: <%= ENV["MON_COACH_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
