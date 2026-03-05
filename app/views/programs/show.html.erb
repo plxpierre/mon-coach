@@ -11,6 +11,8 @@
       {
         index: d,
         title: "Day #{d}",
+        focus: (d == 1 ? "Strength" : d == 2 ? "Conditioning" : "Core"),
+        duration: (d == 1 ? "45 min" : d == 2 ? "35 min" : "25 min"),
         actions: [
           { reps: "3x12", name: "Goblet Squat", rest: "60s" },
           { reps: "3x10", name: "Push-up", rest: "60s" },
@@ -21,62 +23,681 @@
   } %>
 <% end %>
 
-<div class="flex items-start justify-between gap-4 mb-6">
-  <div>
-    <h1 class="text-3xl font-bold"><%= program_title %></h1>
-    <p class="opacity-70 mt-1">
-      Duration: <%= program_weeks %> weeks • Training days/week: <%= days_per_week %>
-    </p>
-  </div>
+<% today_week = weeks.first %>
+<% today_session = today_week[:days].first %>
 
-  <div class="flex gap-2">
-    <a class="btn btn-outline" href="#">Edit</a>
-    <a class="btn btn-ghost" href="#">Back</a>
-  </div>
-</div>
+<% playlist_title = "Workout Momentum" %>
+<% track_title = "Run The Night" %>
+<% track_artist = "Pulse System" %>
+<% track_elapsed = "01:42" %>
+<% track_total = "03:28" %>
+<% track_progress = 51 %>
 
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-  <% weeks.each do |week| %>
-    <div class="card bg-base-100 shadow-xl border border-base-300">
-      <div class="card-body flex flex-col">
-        <div class="flex items-start justify-between">
-          <div>
-            <h2 class="card-title">Week <%= week[:index] %></h2>
-            <p class="opacity-70 text-sm">Plan overview</p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+  <%# =========================
+      NORMAL PAGE VIEW
+      ========================= %>
+  <div id="pageView">
+
+    <%# Header %>
+    <header class="mb-8">
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="inline-flex items-center justify-center w-10 h-10 rounded-2xl border border-base-300 bg-base-200">
+            <i class="fa-solid fa-circle-play text-sm opacity-80"></i>
+          </span>
+
+          <div class="min-w-0">
+            <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight truncate"><%= program_title %></h1>
+            <p class="text-sm opacity-70 mt-1">
+              <%= program_weeks %> weeks • <%= days_per_week %> sessions/week • Structured by AI coaching
+            </p>
           </div>
-          <span class="badge badge-outline"><%= days_per_week %> days</span>
         </div>
 
-        <div class="grid grid-cols-1 gap-3 mt-4">
-          <% week[:days].each do |day| %>
-            <div class="rounded-xl border border-base-300 bg-base-200/40 p-4">
-              <div class="flex items-center justify-between mb-3">
-                <div class="font-semibold"><%= day[:title] %></div>
-                <span class="badge badge-neutral badge-sm"><%= day[:actions].size %> exercises</span>
+        <div class="flex items-center gap-2">
+          <a class="btn btn-outline btn-sm gap-2" href="#">
+            <i class="fa-solid fa-pen text-xs"></i>
+            Edit
+          </a>
+          <%= link_to programs_path, class: "btn btn-ghost btn-sm gap-2" do %>
+            <i class="fa-solid fa-arrow-left text-xs"></i>
+            Back
+          <% end %>
+        </div>
+      </div>
+
+      <%# Motivation + compact music player on the right %>
+      <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div class="lg:col-span-8 flex items-start gap-3">
+          <i class="fa-solid fa-waveform-lines text-sm opacity-70 mt-1"></i>
+
+          <div class="min-w-0">
+            <div class="font-semibold">Today’s focus: execution > motivation</div>
+            <p class="text-sm opacity-70 mt-1">
+              Keep the pace controlled. Quality reps. Short rests. Earn the next level.
+            </p>
+
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="badge badge-outline">
+                <i class="fa-solid fa-bolt text-xs opacity-70"></i>
+                <span class="ml-2">High energy</span>
+              </span>
+              <span class="badge badge-outline">
+                <i class="fa-solid fa-headphones text-xs opacity-70"></i>
+                <span class="ml-2">Focus mode</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4">
+          <div class="rounded-xl border border-base-300 bg-base-100 p-3">
+            <div class="flex items-center gap-3">
+              <button class="btn btn-primary btn-xs btn-circle">
+                <i class="fa-solid fa-play text-xs"></i>
+              </button>
+
+              <div class="min-w-0 flex-1">
+                <div class="text-xs opacity-70">Playlist</div>
+                <div class="text-sm font-semibold truncate"><%= playlist_title %></div>
+                <div class="text-xs opacity-70 truncate"><%= track_title %> • <%= track_artist %></div>
+
+                <div class="mt-2">
+                  <progress class="progress progress-primary w-full" value="<%= track_progress %>" max="100"></progress>
+                  <div class="flex justify-between text-xs opacity-70 mt-1">
+                    <span><%= track_elapsed %></span>
+                    <span><%= track_total %></span>
+                  </div>
+                </div>
               </div>
 
-              <div class="space-y-2">
-                <% day[:actions].each do |a| %>
-                  <div class="flex items-center justify-between gap-3">
-                    <div class="min-w-0">
-                      <div class="font-medium truncate"><%= a[:name] %></div>
-                      <div class="text-xs opacity-70">
-                        Reps: <span class="font-semibold"><%= a[:reps] %></span>
-                        • Rest: <span class="font-semibold"><%= a[:rest] %></span>
+              <div class="flex items-center gap-1">
+                <button class="btn btn-ghost btn-xs btn-circle" title="Prev">
+                  <i class="fa-solid fa-backward-step text-xs opacity-70"></i>
+                </button>
+                <button class="btn btn-ghost btn-xs btn-circle" title="Next">
+                  <i class="fa-solid fa-forward-step text-xs opacity-70"></i>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <%# KPI row %>
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div class="rounded-2xl border border-base-300 bg-base-100 shadow-sm p-5">
+        <div class="flex items-center justify-between">
+          <div class="text-sm opacity-70">Progress</div>
+          <i class="fa-solid fa-chart-line opacity-70"></i>
+        </div>
+        <div class="mt-3 flex items-end justify-between">
+          <div class="text-2xl font-semibold">34%</div>
+          <div class="text-xs opacity-70">Week 3 of <%= program_weeks %></div>
+        </div>
+        <progress class="progress progress-primary w-full mt-3" value="34" max="100"></progress>
+      </div>
+
+      <div class="rounded-2xl border border-base-300 bg-base-100 shadow-sm p-5">
+        <div class="flex items-center justify-between">
+          <div class="text-sm opacity-70">Readiness</div>
+          <i class="fa-solid fa-heart-pulse opacity-70"></i>
+        </div>
+        <div class="mt-3 flex items-center justify-between">
+          <div>
+            <div class="text-2xl font-semibold">76%</div>
+            <div class="text-xs opacity-70 mt-1">Good recovery</div>
+          </div>
+          <div class="radial-progress text-success scale-75" style="--value:76;" aria-valuenow="76" role="progressbar">76</div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-base-300 bg-base-100 shadow-sm p-5">
+        <div class="flex items-center justify-between">
+          <div class="text-sm opacity-70">Streak</div>
+          <i class="fa-solid fa-fire-flame-curved opacity-70"></i>
+        </div>
+        <div class="mt-3 text-2xl font-semibold">7 days</div>
+        <div class="text-xs opacity-70 mt-1">Consistency beats motivation</div>
+      </div>
+
+      <div class="rounded-2xl border border-base-300 bg-base-100 shadow-sm p-5">
+        <div class="flex items-center justify-between">
+          <div class="text-sm opacity-70">Next session</div>
+          <i class="fa-solid fa-clock opacity-70"></i>
+        </div>
+        <div class="mt-3 text-2xl font-semibold"><%= today_session[:title] %></div>
+        <div class="text-xs opacity-70 mt-1"><%= today_session[:focus] %> • ~<%= today_session[:duration] %></div>
+      </div>
+    </section>
+
+    <%# Start today’s workout card %>
+    <section class="card bg-base-100 border border-base-300 shadow-sm mb-10">
+      <div class="card-body">
+
+        <div class="flex items-start justify-between gap-4">
+          <div class="min-w-0">
+            <h2 class="text-2xl font-semibold tracking-tight">Start today’s workout</h2>
+            <p class="opacity-70 mt-1">
+              Week <%= today_week[:index] %> • <%= today_session[:title] %> • <%= today_session[:focus] %> • <%= today_session[:duration] %>
+            </p>
+          </div>
+
+          <span class="badge badge-outline"><%= today_session[:actions].size %> exercises</span>
+        </div>
+
+        <div class="divider my-6"></div>
+
+        <div class="space-y-3">
+          <% today_session[:actions].each do |a| %>
+            <div class="rounded-2xl border border-base-300 bg-base-200/40 p-4 flex items-center justify-between gap-4">
+              <div class="min-w-0">
+                <div class="font-semibold truncate"><%= a[:name] %></div>
+                <div class="text-xs opacity-70 mt-1">
+                  <span class="font-semibold"><%= a[:reps] %></span>
+                  • Rest <span class="font-semibold"><%= a[:rest] %></span>
+                </div>
+              </div>
+
+              <button class="btn btn-outline btn-xs gap-2">
+                <i class="fa-solid fa-circle-play text-xs"></i>
+                Videos
+              </button>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="mt-6 flex items-center justify-between">
+          <progress class="progress progress-primary w-32" value="0" max="100"></progress>
+
+          <button id="startWorkoutBtn" class="btn btn-primary btn-sm gap-2">
+            <i class="fa-solid fa-play text-xs"></i>
+            Start workout
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <%# Full plan (NO videos in week header; only in actions) %>
+    <section class="card bg-base-100 border border-base-300 shadow-sm">
+      <div class="card-body">
+
+        <header class="flex items-end justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-semibold tracking-tight">Full plan</h2>
+            <p class="opacity-70 mt-1">Open a week to see sessions. Videos are available per exercise.</p>
+          </div>
+          <span class="badge badge-outline"><%= program_weeks %> weeks</span>
+        </header>
+
+        <div class="divider my-6"></div>
+
+        <div class="space-y-3">
+          <% weeks.each do |week| %>
+            <div class="collapse collapse-arrow rounded-2xl border border-base-300 bg-base-200/40">
+              <input type="checkbox" />
+
+              <div class="collapse-title">
+                <div class="flex items-center gap-3 min-w-0">
+                  <span class="inline-flex items-center justify-center w-9 h-9 rounded-2xl border border-base-300 bg-base-100">
+                    <i class="fa-solid fa-calendar-week text-xs opacity-70"></i>
+                  </span>
+                  <div class="min-w-0">
+                    <div class="font-semibold truncate">Week <%= week[:index] %></div>
+                    <div class="text-xs opacity-70"><%= days_per_week %> sessions • Balanced load</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="collapse-content pt-0">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <% week[:days].each do |day| %>
+                    <div class="rounded-2xl border border-base-300 bg-base-100 p-4">
+                      <div class="flex items-start justify-between gap-3 mb-3">
+                        <div class="min-w-0">
+                          <div class="font-semibold"><%= day[:title] %></div>
+                          <div class="text-xs opacity-70 mt-1">
+                            <%= day[:focus] %> • <%= day[:duration] %> • <%= day[:actions].size %> exercises
+                          </div>
+                        </div>
+                        <span class="badge badge-neutral badge-sm"><%= day[:actions].size %></span>
+                      </div>
+
+                      <div class="space-y-2">
+                        <% day[:actions].each do |a| %>
+                          <div class="flex items-center justify-between gap-3 rounded-xl border border-base-300 bg-base-200/40 px-3 py-2">
+                            <div class="min-w-0">
+                              <div class="font-medium truncate"><%= a[:name] %></div>
+                              <div class="text-xs opacity-70">
+                                <span class="font-semibold"><%= a[:reps] %></span>
+                                • Rest <span class="font-semibold"><%= a[:rest] %></span>
+                              </div>
+                            </div>
+                            <button class="btn btn-outline btn-xs gap-2">
+                              <i class="fa-solid fa-circle-play text-xs"></i>
+                              Videos
+                            </button>
+                          </div>
+                        <% end %>
+                      </div>
+
+                      <div class="mt-4 flex items-center justify-between">
+                        <progress class="progress progress-primary w-32" value="40" max="100"></progress>
+                        <button class="btn btn-primary btn-sm gap-2">
+                          <i class="fa-solid fa-play text-xs"></i>
+                          Start session
+                        </button>
                       </div>
                     </div>
-                    <button class="btn btn-ghost btn-sm">View</button>
-                  </div>
-                <% end %>
+                  <% end %>
+                </div>
               </div>
             </div>
           <% end %>
         </div>
 
-        <div class="card-actions mt-auto justify-end pt-4">
-          <button class="btn btn-primary btn-sm">Week details</button>
+      </div>
+    </section>
+
+  </div>
+
+
+  <%# =========================
+      WORKOUT FULLSCREEN VIEW
+      ========================= %>
+  <div id="workoutView" class="hidden">
+
+    <%# Top bar %>
+    <div class="sticky top-0 z-20 bg-base-100 border-b border-base-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="inline-flex items-center justify-center w-10 h-10 rounded-2xl border border-base-300 bg-base-200">
+            <i class="fa-solid fa-dumbbell text-sm opacity-80"></i>
+          </span>
+
+          <div class="min-w-0">
+            <div class="text-xs opacity-70">Workout mode</div>
+            <div class="font-semibold truncate">
+              Week <%= today_week[:index] %> • <%= today_session[:title] %> • <%= today_session[:focus] %>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <div class="hidden sm:flex items-center gap-2 text-xs opacity-70">
+            <i class="fa-solid fa-music"></i>
+            <span class="truncate max-w-[220px]"><%= track_title %> • <%= track_artist %></span>
+          </div>
+
+          <button id="exitWorkoutBtn" class="btn btn-ghost btn-sm gap-2">
+            <i class="fa-solid fa-xmark text-xs"></i>
+            Exit
+          </button>
+        </div>
+      </div>
+
+      <%# Progress line %>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
+        <div class="flex items-center justify-between text-xs opacity-70">
+          <span id="workoutStepLabel">Exercise 1 / <%= today_session[:actions].size %></span>
+          <span id="workoutPctLabel">0%</span>
+        </div>
+        <progress id="workoutProgress" class="progress progress-primary w-full mt-2" value="0" max="100"></progress>
+      </div>
+    </div>
+
+    <%# Main workout grid %>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <%# Timeline %>
+        <aside class="lg:col-span-4">
+          <div class="rounded-2xl border border-base-300 bg-base-200/40 p-5">
+            <div class="flex items-center justify-between">
+              <div class="font-semibold">Timeline</div>
+              <span class="badge badge-outline"><%= today_session[:actions].size %> exercises</span>
+            </div>
+
+            <div class="mt-4 space-y-2">
+              <% today_session[:actions].each_with_index do |a, idx| %>
+                <div class="flex items-center justify-between gap-3 rounded-xl border border-base-300 bg-base-100 px-4 py-3">
+                  <div class="min-w-0">
+                    <div class="font-semibold truncate"><%= a[:name] %></div>
+                    <div class="text-xs opacity-70"><%= a[:reps] %> • Rest <%= a[:rest] %></div>
+                  </div>
+
+                  <input
+                    type="checkbox"
+                    class="checkbox checkbox-sm"
+                    data-workout-check
+                    data-index="<%= idx %>">
+                </div>
+              <% end %>
+            </div>
+
+            <div class="mt-4 text-xs opacity-70">
+              Tip: Smooth reps. Strict rests. Chase quality.
+            </div>
+          </div>
+        </aside>
+
+        <%# Current exercise + rest timer %>
+        <main class="lg:col-span-8 space-y-6">
+
+          <%# Current exercise card %>
+          <div class="rounded-2xl border border-base-300 bg-base-200/40 p-6">
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <div class="text-xs opacity-70">Now</div>
+                <div id="exName" class="text-2xl font-semibold tracking-tight truncate"></div>
+                <div class="text-sm opacity-70 mt-1">
+                  Target: <span id="exReps" class="font-semibold"></span>
+                  • Rest: <span id="exRest" class="font-semibold"></span>
+                </div>
+              </div>
+
+              <button class="btn btn-outline btn-sm gap-2">
+                <i class="fa-solid fa-circle-play text-xs"></i>
+                Videos
+              </button>
+            </div>
+
+            <div class="mt-5 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <button id="prevExBtn" class="btn btn-ghost btn-sm btn-circle" title="Previous">
+                  <i class="fa-solid fa-chevron-left text-xs opacity-70"></i>
+                </button>
+                <button id="nextExBtn" class="btn btn-ghost btn-sm btn-circle" title="Next">
+                  <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
+                </button>
+              </div>
+
+              <button id="markDoneBtn" class="btn btn-primary btn-sm gap-2">
+                <i class="fa-solid fa-check text-xs"></i>
+                Mark complete
+              </button>
+            </div>
+          </div>
+
+          <%# Rest timer %>
+          <div class="rounded-2xl border border-base-300 bg-base-100 p-6">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="font-semibold flex items-center gap-2">
+                  <i class="fa-solid fa-stopwatch opacity-70"></i>
+                  Rest timer
+                </div>
+                <p class="text-sm opacity-70 mt-1">Start after each set. Keep it strict.</p>
+              </div>
+
+              <span class="badge badge-outline" id="restDefaultBadge">Default: 60s</span>
+            </div>
+
+            <div class="mt-5 flex items-center justify-between gap-4">
+              <div id="restDisplay" class="text-4xl font-semibold tracking-tight">01:00</div>
+
+              <div class="flex items-center gap-2">
+                <button id="restMinusBtn" class="btn btn-outline btn-sm btn-circle" title="-10s">
+                  <i class="fa-solid fa-minus text-xs"></i>
+                </button>
+                <button id="restPlusBtn" class="btn btn-outline btn-sm btn-circle" title="+10s">
+                  <i class="fa-solid fa-plus text-xs"></i>
+                </button>
+                <button id="restStartBtn" class="btn btn-primary btn-sm gap-2">
+                  <i class="fa-solid fa-play text-xs"></i>
+                  Start
+                </button>
+                <button id="restResetBtn" class="btn btn-ghost btn-sm gap-2">
+                  <i class="fa-solid fa-rotate-left text-xs opacity-70"></i>
+                  Reset
+                </button>
+              </div>
+            </div>
+
+            <progress id="restProgress" class="progress progress-primary w-full mt-5" value="0" max="100"></progress>
+
+            <div class="mt-2 flex items-center justify-between text-xs opacity-70">
+              <span>Focus breathing</span>
+              <span id="nextUpLabel">Next: —</span>
+            </div>
+          </div>
+
+        </main>
+
+      </div>
+    </div>
+
+    <%# Floating mini player %>
+    <div class="fixed bottom-4 left-0 right-0 z-30 pointer-events-none">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="pointer-events-auto rounded-2xl border border-base-300 bg-base-100 shadow-sm p-3">
+          <div class="flex items-center justify-between gap-4">
+
+            <div class="flex items-center gap-3 min-w-0">
+              <button class="btn btn-primary btn-xs btn-circle">
+                <i class="fa-solid fa-play text-xs"></i>
+              </button>
+
+              <div class="min-w-0">
+                <div class="text-xs opacity-70 truncate"><%= playlist_title %></div>
+                <div class="text-sm font-semibold truncate"><%= track_title %></div>
+                <div class="text-xs opacity-70 truncate"><%= track_artist %></div>
+              </div>
+            </div>
+
+            <div class="w-56 hidden sm:block">
+              <progress class="progress progress-primary w-full" value="<%= track_progress %>" max="100"></progress>
+              <div class="mt-1 flex items-center justify-between text-xs opacity-70">
+                <span><%= track_elapsed %></span>
+                <span><%= track_total %></span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button class="btn btn-ghost btn-xs btn-circle" title="Prev">
+                <i class="fa-solid fa-backward-step text-xs opacity-70"></i>
+              </button>
+              <button class="btn btn-ghost btn-xs btn-circle" title="Next">
+                <i class="fa-solid fa-forward-step text-xs opacity-70"></i>
+              </button>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
-  <% end %>
+
+  </div>
+
 </div>
+
+
+<script>
+  (() => {
+    const pageView = document.getElementById("pageView");
+    const workoutView = document.getElementById("workoutView");
+    const startBtn = document.getElementById("startWorkoutBtn");
+    const exitBtn = document.getElementById("exitWorkoutBtn");
+
+    // Workout state (derived from embedded JSON)
+    const actions = <%= raw(today_session[:actions].to_json) %>;
+    const total = actions.length;
+
+    let idx = 0;
+    let timer = null;
+    let remaining = 0;
+    let defaultRest = 60;
+
+    // UI refs
+    const exName = document.getElementById("exName");
+    const exReps = document.getElementById("exReps");
+    const exRest = document.getElementById("exRest");
+
+    const prevExBtn = document.getElementById("prevExBtn");
+    const nextExBtn = document.getElementById("nextExBtn");
+    const markDoneBtn = document.getElementById("markDoneBtn");
+
+    const restDisplay = document.getElementById("restDisplay");
+    const restProgress = document.getElementById("restProgress");
+    const restDefaultBadge = document.getElementById("restDefaultBadge");
+    const restMinusBtn = document.getElementById("restMinusBtn");
+    const restPlusBtn = document.getElementById("restPlusBtn");
+    const restStartBtn = document.getElementById("restStartBtn");
+    const restResetBtn = document.getElementById("restResetBtn");
+    const nextUpLabel = document.getElementById("nextUpLabel");
+
+    const workoutProgress = document.getElementById("workoutProgress");
+    const workoutStepLabel = document.getElementById("workoutStepLabel");
+    const workoutPctLabel = document.getElementById("workoutPctLabel");
+
+    const checks = Array.from(document.querySelectorAll("[data-workout-check]"));
+
+    const parseRest = (restStr) => {
+      const m = String(restStr || "").match(/(\d+)/);
+      return m ? Math.max(0, parseInt(m[1], 10)) : 60;
+    };
+
+    const mmss = (sec) => {
+      const s = Math.max(0, sec | 0);
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
+    };
+
+    const completedCount = () => checks.filter(c => c.checked).length;
+
+    const updateProgress = () => {
+      const done = completedCount();
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      workoutProgress.value = pct;
+      workoutPctLabel.textContent = `${pct}%`;
+      workoutStepLabel.textContent = `Exercise ${Math.min(idx + 1, total)} / ${total}`;
+    };
+
+    const applyExercise = () => {
+      const a = actions[idx] || actions[0];
+      exName.textContent = a?.name || "Exercise";
+      exReps.textContent = a?.reps || "—";
+      exRest.textContent = a?.rest || "60s";
+
+      defaultRest = parseRest(a?.rest);
+      restDefaultBadge.textContent = `Default: ${defaultRest}s`;
+
+      remaining = defaultRest;
+      restDisplay.textContent = mmss(remaining);
+      restProgress.value = 0;
+
+      const next = actions[idx + 1];
+      nextUpLabel.textContent = next ? `Next: ${next.name}` : "Next: Finish";
+
+      updateProgress();
+    };
+
+    const stopTimer = () => {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      restStartBtn.innerHTML = '<i class="fa-solid fa-play text-xs"></i> Start';
+    };
+
+    const startTimer = () => {
+      stopTimer();
+      const startFrom = remaining;
+      const totalSec = Math.max(1, startFrom);
+
+      restStartBtn.innerHTML = '<i class="fa-solid fa-pause text-xs"></i> Pause';
+
+      timer = window.setInterval(() => {
+        remaining -= 1;
+        restDisplay.textContent = mmss(remaining);
+
+        const pct = Math.round(((totalSec - remaining) / totalSec) * 100);
+        restProgress.value = Math.min(100, Math.max(0, pct));
+
+        if (remaining <= 0) {
+          stopTimer();
+          remaining = defaultRest;
+          restDisplay.textContent = mmss(remaining);
+          restProgress.value = 0;
+        }
+      }, 1000);
+    };
+
+    const toggleTimer = () => {
+      if (timer) {
+        stopTimer();
+      } else {
+        startTimer();
+      }
+    };
+
+    const setRemaining = (val) => {
+      remaining = Math.max(0, val | 0);
+      restDisplay.textContent = mmss(remaining);
+      restProgress.value = 0;
+    };
+
+    // Navigation
+    const goTo = (newIdx) => {
+      idx = Math.min(total - 1, Math.max(0, newIdx));
+      stopTimer();
+      applyExercise();
+    };
+
+    const markDone = () => {
+      const c = checks[idx];
+      if (c) c.checked = true;
+      updateProgress();
+
+      // Auto-advance
+      if (idx < total - 1) goTo(idx + 1);
+    };
+
+    // View switching
+    const openWorkout = () => {
+      pageView.classList.add("hidden");
+      workoutView.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "instant" });
+
+      idx = 0;
+      checks.forEach(c => c.checked = false);
+      stopTimer();
+      applyExercise();
+    };
+
+    const closeWorkout = () => {
+      stopTimer();
+      workoutView.classList.add("hidden");
+      pageView.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "instant" });
+    };
+
+    // Wire events
+    startBtn?.addEventListener("click", openWorkout);
+    exitBtn?.addEventListener("click", closeWorkout);
+
+    prevExBtn?.addEventListener("click", () => goTo(idx - 1));
+    nextExBtn?.addEventListener("click", () => goTo(idx + 1));
+    markDoneBtn?.addEventListener("click", markDone);
+
+    restMinusBtn?.addEventListener("click", () => { stopTimer(); setRemaining(remaining - 10); });
+    restPlusBtn?.addEventListener("click", () => { stopTimer(); setRemaining(remaining + 10); });
+    restStartBtn?.addEventListener("click", toggleTimer);
+    restResetBtn?.addEventListener("click", () => { stopTimer(); setRemaining(defaultRest); });
+
+    // Clicking a timeline checkbox should jump to that exercise
+    checks.forEach((c) => {
+      c.addEventListener("click", (e) => {
+        const i = parseInt(c.dataset.index, 10);
+        if (!Number.isNaN(i)) {
+          // Don't prevent checking; just navigate
+          goTo(i);
+        }
+      });
+    });
+  })();
+</script>
