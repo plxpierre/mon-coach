@@ -1,3 +1,3 @@
 class Week < ApplicationRecord
-  belongs_to :program, dependant: destroy
+  belongs_to :program, dependent: :destroy
 end

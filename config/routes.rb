@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   root "programs#index"
 
   # Routes programmes
-  resources :programs, only: [:index, :show, :new, :create] do
+  resources :programs, only: [:index, :show, :new, :create, :destroy] do
     resources :weeks, only: [:show]
   end
 end

@@ -1,5 +1,42 @@
+
+<div class="max-w-2xl mx-auto p-4 py-10 font-sans">
+
+  <h1 class="text-2xl font-bold mb-8 text-gray-900"><%= @program.title %></h1>
+
+  <div class="space-y-10">
+    <% @program.weeks.each do |week| %>
+      <section>
+        <h2 class="text-sm font-black uppercase tracking-widest text-blue-600 mb-4">
+          Semaine <%= week.week_number %>
+        </h2>
+
+        <div class="space-y-4">
+          <% week.week_program.each do |seance| %>
+            <div class="p-5 bg-gray-50 rounded-lg border border-gray-100 whitespace-pre-line text-gray-700 leading-relaxed">
+              <%= seance %>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </div>
+</div>
+<div class="mb-6 p-3">
+  <%= link_to programs_path, class:"text-gray-500 hover:text-red-600 transition flex items-center gap-2 text-sm font-medium" do %>
+    <span>←</span>  Back
+  <% end %>
+</div>
+
+<div class="mt-8 pt-6 border-t text-gray-500">
+  <%= button_to "Delete",
+      program_path(@program),
+      method: :delete,
+      data: { turbo_confirm: "Delete ?" },
+      class:"text-sm text-red-600 hover:underline" %>
+</div>
 <%# app/views/programs/show.html.erb %>
 
+<!--
 <% program_title = "Program #12" %>
 <% program_weeks = 8 %>
 <% days_per_week = 3 %>
@@ -23,8 +60,13 @@
   } %>
 <% end %>
 
-<% today_week = weeks.first %>
-<% today_session = today_week[:days].first %>
+<div class="flex items-start justify-between gap-4 mb-6">
+  <div>
+    <h1 class="text-3xl font-bold"><%= @program.title %></h1>
+    <p class="opacity-70 mt-1">
+      Duration: <%= program_weeks %> weeks • Training days/week: <%= days_per_week %>
+    </p>
+  </div>
 
 <% playlist_title = "Workout Momentum" %>
 <% track_title = "Run The Night" %>
@@ -515,189 +557,4 @@
   </div>
 
 </div>
-
-
-<script>
-  (() => {
-    const pageView = document.getElementById("pageView");
-    const workoutView = document.getElementById("workoutView");
-    const startBtn = document.getElementById("startWorkoutBtn");
-    const exitBtn = document.getElementById("exitWorkoutBtn");
-
-    // Workout state (derived from embedded JSON)
-    const actions = <%= raw(today_session[:actions].to_json) %>;
-    const total = actions.length;
-
-    let idx = 0;
-    let timer = null;
-    let remaining = 0;
-    let defaultRest = 60;
-
-    // UI refs
-    const exName = document.getElementById("exName");
-    const exReps = document.getElementById("exReps");
-    const exRest = document.getElementById("exRest");
-
-    const prevExBtn = document.getElementById("prevExBtn");
-    const nextExBtn = document.getElementById("nextExBtn");
-    const markDoneBtn = document.getElementById("markDoneBtn");
-
-    const restDisplay = document.getElementById("restDisplay");
-    const restProgress = document.getElementById("restProgress");
-    const restDefaultBadge = document.getElementById("restDefaultBadge");
-    const restMinusBtn = document.getElementById("restMinusBtn");
-    const restPlusBtn = document.getElementById("restPlusBtn");
-    const restStartBtn = document.getElementById("restStartBtn");
-    const restResetBtn = document.getElementById("restResetBtn");
-    const nextUpLabel = document.getElementById("nextUpLabel");
-
-    const workoutProgress = document.getElementById("workoutProgress");
-    const workoutStepLabel = document.getElementById("workoutStepLabel");
-    const workoutPctLabel = document.getElementById("workoutPctLabel");
-
-    const checks = Array.from(document.querySelectorAll("[data-workout-check]"));
-
-    const parseRest = (restStr) => {
-      const m = String(restStr || "").match(/(\d+)/);
-      return m ? Math.max(0, parseInt(m[1], 10)) : 60;
-    };
-
-    const mmss = (sec) => {
-      const s = Math.max(0, sec | 0);
-      const m = Math.floor(s / 60);
-      const r = s % 60;
-      return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
-    };
-
-    const completedCount = () => checks.filter(c => c.checked).length;
-
-    const updateProgress = () => {
-      const done = completedCount();
-      const pct = total ? Math.round((done / total) * 100) : 0;
-      workoutProgress.value = pct;
-      workoutPctLabel.textContent = `${pct}%`;
-      workoutStepLabel.textContent = `Exercise ${Math.min(idx + 1, total)} / ${total}`;
-    };
-
-    const applyExercise = () => {
-      const a = actions[idx] || actions[0];
-      exName.textContent = a?.name || "Exercise";
-      exReps.textContent = a?.reps || "—";
-      exRest.textContent = a?.rest || "60s";
-
-      defaultRest = parseRest(a?.rest);
-      restDefaultBadge.textContent = `Default: ${defaultRest}s`;
-
-      remaining = defaultRest;
-      restDisplay.textContent = mmss(remaining);
-      restProgress.value = 0;
-
-      const next = actions[idx + 1];
-      nextUpLabel.textContent = next ? `Next: ${next.name}` : "Next: Finish";
-
-      updateProgress();
-    };
-
-    const stopTimer = () => {
-      if (timer) window.clearInterval(timer);
-      timer = null;
-      restStartBtn.innerHTML = '<i class="fa-solid fa-play text-xs"></i> Start';
-    };
-
-    const startTimer = () => {
-      stopTimer();
-      const startFrom = remaining;
-      const totalSec = Math.max(1, startFrom);
-
-      restStartBtn.innerHTML = '<i class="fa-solid fa-pause text-xs"></i> Pause';
-
-      timer = window.setInterval(() => {
-        remaining -= 1;
-        restDisplay.textContent = mmss(remaining);
-
-        const pct = Math.round(((totalSec - remaining) / totalSec) * 100);
-        restProgress.value = Math.min(100, Math.max(0, pct));
-
-        if (remaining <= 0) {
-          stopTimer();
-          remaining = defaultRest;
-          restDisplay.textContent = mmss(remaining);
-          restProgress.value = 0;
-        }
-      }, 1000);
-    };
-
-    const toggleTimer = () => {
-      if (timer) {
-        stopTimer();
-      } else {
-        startTimer();
-      }
-    };
-
-    const setRemaining = (val) => {
-      remaining = Math.max(0, val | 0);
-      restDisplay.textContent = mmss(remaining);
-      restProgress.value = 0;
-    };
-
-    // Navigation
-    const goTo = (newIdx) => {
-      idx = Math.min(total - 1, Math.max(0, newIdx));
-      stopTimer();
-      applyExercise();
-    };
-
-    const markDone = () => {
-      const c = checks[idx];
-      if (c) c.checked = true;
-      updateProgress();
-
-      // Auto-advance
-      if (idx < total - 1) goTo(idx + 1);
-    };
-
-    // View switching
-    const openWorkout = () => {
-      pageView.classList.add("hidden");
-      workoutView.classList.remove("hidden");
-      window.scrollTo({ top: 0, behavior: "instant" });
-
-      idx = 0;
-      checks.forEach(c => c.checked = false);
-      stopTimer();
-      applyExercise();
-    };
-
-    const closeWorkout = () => {
-      stopTimer();
-      workoutView.classList.add("hidden");
-      pageView.classList.remove("hidden");
-      window.scrollTo({ top: 0, behavior: "instant" });
-    };
-
-    // Wire events
-    startBtn?.addEventListener("click", openWorkout);
-    exitBtn?.addEventListener("click", closeWorkout);
-
-    prevExBtn?.addEventListener("click", () => goTo(idx - 1));
-    nextExBtn?.addEventListener("click", () => goTo(idx + 1));
-    markDoneBtn?.addEventListener("click", markDone);
-
-    restMinusBtn?.addEventListener("click", () => { stopTimer(); setRemaining(remaining - 10); });
-    restPlusBtn?.addEventListener("click", () => { stopTimer(); setRemaining(remaining + 10); });
-    restStartBtn?.addEventListener("click", toggleTimer);
-    restResetBtn?.addEventListener("click", () => { stopTimer(); setRemaining(defaultRest); });
-
-    // Clicking a timeline checkbox should jump to that exercise
-    checks.forEach((c) => {
-      c.addEventListener("click", (e) => {
-        const i = parseInt(c.dataset.index, 10);
-        if (!Number.isNaN(i)) {
-          // Don't prevent checking; just navigate
-          goTo(i);
-        }
-      });
-    });
-  })();
-</script>
+-->
