@@ -15,35 +15,16 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%# Tailwind + daisyui %>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.2.0/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.2.0/css/all.css">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
   <body class="min-h-lvh flex flex-col">
     <%= render "shared/navbar" %>
-    <main class="container mx-auto mt-28 px-5 flex flex-col grow">
-      <% if notice %>
-  <div class="max-w-7xl mx-auto px-4 mt-4">
-    <div class="alert alert-success shadow-lg flex items-center gap-2">
-      <i class="fa-solid fa-circle-check"></i>
-      <span><%= notice %></span>
-    </div>
-  </div>
-
-  <script>
-    setTimeout(() => {
-      const flash = document.querySelector('.alert');
-      if (flash) {
-        flash.style.transition = "opacity 0.5s ease";
-        flash.style.opacity = "0";
-        setTimeout(() => flash.remove(), 500);
-      }
-    }, 4000);
-  </script>
-<% end %>
+    <main class="container mx-auto mt-12 px-5 flex flex-col grow">
       <%= yield %>
     </main>
     <%= render "shared/footer" %>
