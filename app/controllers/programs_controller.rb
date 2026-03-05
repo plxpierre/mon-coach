@@ -22,8 +22,6 @@ A short introductory paragraph describing the session.
 
 A bullet list of the exercises and sequence.
 
-A final sentence explaining the purpose of the session.
-
 Adapt intensity, progression, and exercises to the provided level and constraints.
 
 Must be a valid JSON
