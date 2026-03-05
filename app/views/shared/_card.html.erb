@@ -1,61 +1,128 @@
-<%= link_to "/programs/1", class: "block" do %>
-  <div class="card bg-base-100 image-full w-96 shadow-sm group overflow-hidden">
-    <figure class="overflow-hidden">
-      <img
-        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-        alt="Program" />
-    </figure>
+<%# app/views/shared/_card.html.erb %>
 
-    <div class="card-body relative flex flex-col">
+<%= link_to program, class: "block group" do %>
+  <div class="
+    card bg-base-100 w-full border border-base-300 overflow-hidden
+    shadow-sm transition-all duration-300
+    group-hover:-translate-y-1 group-hover:shadow-md
+  ">
 
-      <!-- Level badge -->
-      <div class="absolute top-4 left-4">
-        <span class="badge badge-neutral font-semibold">Level • Intermediate</span>
+    <div class="card-body relative flex flex-col p-5">
+
+      <%# Diagonal purple gradient full card %>
+      <div class="
+        absolute inset-0
+        bg-gradient-to-br from-primary/20 via-primary/10 to-transparent
+        transition-opacity duration-300
+      "></div>
+
+      <%# Subtle premium glow on hover %>
+      <div class="
+        pointer-events-none absolute inset-0 opacity-0
+        transition-opacity duration-300
+        group-hover:opacity-100
+      ">
+        <div class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl"></div>
+        <div class="absolute -bottom-28 -right-28 h-72 w-72 rounded-full bg-primary/15 blur-3xl"></div>
       </div>
 
-      <!-- Difficulty score -->
-      <div class="absolute top-4 right-4 scale-75">
-        <div
-          class="radial-progress"
-          style="--value:70;"
-          aria-valuenow="70"
-          role="progressbar"
-          title="Difficulty"
-        >
-          7/10
-        </div>
+      <%# Watermark icon (dark violet / transparent) %>
+      <div class="
+        pointer-events-none absolute inset-0 flex items-center justify-center
+        transition-all duration-300
+        opacity-70 group-hover:opacity-90
+        group-hover:scale-[1.03]
+      ">
+        <i class="fa-solid fa-person-swimming text-primary/30 text-[140px]"></i>
       </div>
 
-      <div class="mt-10">
+      <%# Top row: level + difficulty chip (replaces radial) %>
+      <div class="relative flex items-start justify-between gap-3">
+
+        <span class="badge badge-neutral font-semibold">
+          Level • Intermediate
+        </span>
+
+        <span class="
+          badge badge-outline gap-2
+          bg-base-100/70 border-base-300
+          backdrop-blur
+        ">
+          <i class="fa-solid fa-gauge-high text-xs opacity-80"></i>
+          Difficulty <span class="font-semibold">7/10</span>
+        </span>
+
+      </div>
+
+      <%# Main content %>
+      <div class="relative mt-6">
+
         <div class="flex items-start gap-3">
-          <i class="fa-solid fa-person-swimming text-4xl"></i>
+
+          <span class="
+            inline-flex items-center justify-center w-12 h-12 rounded-2xl
+            border border-base-300 bg-base-100/80
+            transition-transform duration-300
+            group-hover:scale-[1.03]
+          ">
+            <i class="fa-solid fa-person-swimming text-xl text-primary"></i>
+          </span>
 
           <div class="min-w-0">
-            <h2 class="card-title leading-tight">
+            <h2 class="text-lg font-semibold leading-tight truncate">
               <%= program.title %>
             </h2>
-            <p class="opacity-80">resume goal</p>
+
+            <p class="text-sm opacity-70 mt-1 line-clamp-2">
+              resume goal
+            </p>
           </div>
+
         </div>
 
-        <div class="mt-3 flex flex-wrap gap-2 items-center">
+        <%# Meta badges %>
+        <div class="mt-4 flex flex-wrap gap-2 items-center">
           <span class="badge badge-outline">8 weeks</span>
           <span class="badge badge-outline">goal</span>
 
           <span class="badge badge-outline flex items-center gap-2">
-            <span>tools</span>
-            <i class="fa-solid fa-shoe-prints"></i>
-            <i class="fa-solid fa-person-running"></i>
+            <span class="opacity-80">Tools</span>
+            <i class="fa-solid fa-shoe-prints opacity-80"></i>
+            <i class="fa-solid fa-person-running opacity-80"></i>
           </span>
         </div>
+
       </div>
 
-      <div class="card-actions mt-auto flex items-center justify-between pt-4">
-        <progress class="progress progress-error w-40" value="70" max="100"></progress>
-        <span class="btn btn-primary">Details</span>
+      <%# Bottom: animated progress (micro-interaction on appearance) %>
+      <div class="relative mt-auto pt-5">
+        <div class="flex items-center justify-between text-xs opacity-70">
+          <span>Progress</span>
+          <span class="font-semibold">70%</span>
+        </div>
+
+        <%# We animate a custom fill bar to get "on appear" animation without JS %>
+        <div class="mt-2 h-2 w-full rounded-full bg-base-200/60 border border-base-300 overflow-hidden">
+          <div
+            class="h-full rounded-full bg-primary"
+            style="
+              width: 70%;
+              transform-origin: left;
+              animation: mcFill 900ms cubic-bezier(.2,.8,.2,1) both;
+            ">
+          </div>
+        </div>
+
+        <%# Scoped CSS for this component only %>
+        <style>
+          @keyframes mcFill {
+            from { transform: scaleX(0); opacity: .6; }
+            to   { transform: scaleX(1); opacity: 1; }
+          }
+        </style>
       </div>
 
     </div>
+
   </div>
 <% end %>
