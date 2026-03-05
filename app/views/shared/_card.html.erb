@@ -41,7 +41,7 @@
           backdrop-blur
         ">
           <i class="fa-solid fa-gauge-high text-xs opacity-80"></i>
-          Difficulty <span class="font-semibold">7/10</span>
+          <%= program.number_of_week %> weeks
         </span>
       </div>
       <%# Main content %>
@@ -65,15 +65,6 @@
           </div>
         </div>
         <%# Meta badges %>
-        <div class="mt-4 flex flex-wrap gap-2 items-center">
-          <span class="badge badge-outline"><%= program.number_of_week %> weeks</span>
-          <span class="badge badge-outline">goal</span>
-          <span class="badge badge-outline flex items-center gap-2">
-            <span class="opacity-80">Tools</span>
-            <i class="fa-solid fa-shoe-prints opacity-80"></i>
-            <i class="fa-solid fa-person-running opacity-80"></i>
-          </span>
-        </div>
       </div>
       <%# Bottom: animated progress (micro-interaction on appearance) %>
       <div class="relative mt-auto pt-5">
