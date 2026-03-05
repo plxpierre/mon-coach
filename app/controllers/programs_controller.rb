@@ -1,3 +1,6 @@
+# app/controllers/programs_controller.rb
+require "ostruct"
+
 class ProgramsController < ApplicationController
 SYSTEM_PROMPT = "You are a professional personal fitness coach.
 
