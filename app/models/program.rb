@@ -1,6 +1,6 @@
 class Program < ApplicationRecord
   belongs_to :user
-  has_many :weeks
+  has_many :weeks, dependent: :destroy
   has_one :chat
 
   LEVELS = ["Debutant", "Intermediate", "Confirmed", "Expert"]
