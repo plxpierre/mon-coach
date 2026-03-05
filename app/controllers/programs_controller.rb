@@ -31,6 +31,8 @@ Adapt intensity, progression, and exercises to the provided level and constraint
 
 Must be a valid JSON
 week_program must be an array
+Return the exercises strictly as a Markdown bullet list using '*' with one exercise per line.
+Do not place multiple exercises on the same line.
 Expected structure:
 Start your response with: {
 
@@ -40,17 +42,17 @@ Start your response with: {
 {
 'week_number': 1,
 'week_program': [
-'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
-'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
-'### **Friday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...'
+'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises:**\n*...\n\nFinal sentence  ...',
+'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises:**\n*...\n\nFinal sentence  ...',
+'### **Friday: Session Name**\n\n**Description**...\n\n**Exercises:**\n*...\n\nFinal sentence  ...'
 ]
 },
 {
 'week_number': 2,
 'week_program': [
-'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
-'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
-'### Friday: Session Name\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...'
+'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises:**\n*...\n\nFinal sentence  ...',
+'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises:**\n*...\n\nFinal sentence  ...',
+'### Friday: Session Name\n\n**Description**...\n\n**Exercises:**\n*...\n\nFinal sentence  ...'
 ]
 }
 ]
