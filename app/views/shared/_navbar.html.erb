@@ -41,60 +41,22 @@
       <!-- CENTER -->
       <div class="navbar-center hidden lg:flex">
 
-        <ul class="menu menu-horizontal px-1 gap-2">
+        <ul class="menu menu-horizontal px-1 gap-2 items-center">
           <li>
-            <details>
-              <summary class="flex items-center gap-2 rounded-xl px-3 font-semibold tracking-wide uppercase text-sm opacity-90">
-                <i class="fa-solid fa-circle-play text-xs opacity-70"></i>
-                Videos
-              </summary>
-
-              <ul class="mt-2 p-2 bg-base-100 rounded-2xl w-64 border border-base-300 shadow-lg z-50">
-
-                <li>
-                  <a class="flex items-center gap-3 rounded-xl">
-                    <i class="fa-solid fa-person-walking text-xs opacity-70 w-4"></i>
-                    Bodyweight Training
-                  </a>
-                </li>
-
-                <li>
-                  <a class="flex items-center gap-3 rounded-xl">
-                    <i class="fa-solid fa-kettlebell text-xs opacity-70 w-4"></i>
-                    CrossFit
-                  </a>
-                </li>
-
-                <li>
-                  <a class="flex items-center gap-3 rounded-xl">
-                    <i class="fa-solid fa-person-running text-xs opacity-70 w-4"></i>
-                    Running
-                  </a>
-                </li>
-
-                <li>
-                  <a class="flex items-center gap-3 rounded-xl">
-                    <i class="fa-solid fa-bicycle text-xs opacity-70 w-4"></i>
-                    Cycling
-                  </a>
-                </li>
-
-                <li>
-                  <a class="flex items-center gap-3 rounded-xl">
-                    <i class="fa-solid fa-person-swimming text-xs opacity-70 w-4"></i>
-                    Swimming
-                  </a>
-                </li>
-
-              </ul>
-            </details>
+              <%= link_to "/scotty-pc.jpg",
+                target: "_blank",
+                class: "flex items-center gap-2 rounded-xl px-3 font-semibold tracking-wide uppercase text-sm opacity-90 text-secondary" do %>
+              <i class="fa-solid fa-dog text-xs opacity-70"></i>
+              Mon Coach for my dog
+            <% end %>
           </li>
 
+          <%# Lien À propos %>
           <li>
-              <%= link_to about_path, class: "flex items-center gap-2 rounded-xl px-3 font-semibold tracking-wide uppercase text-sm opacity-90" do %>
+            <%= link_to about_path, class: "flex items-center gap-2 rounded-xl px-3 font-semibold tracking-wide uppercase text-sm opacity-90" do %>
               <i class="fa-solid fa-circle-info text-xs opacity-70"></i>
-                À propos
-              <% end %>
+              À propos
+            <% end %>
           </li>
 
         </ul>
