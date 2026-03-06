@@ -1,6 +1,6 @@
 <%# app/views/programs/show.html.erb %>
 <div
-  class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
+  class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
   data-controller="program-show">
   <header class="mb-8">
     <div class="flex items-start justify-between gap-4">
@@ -30,7 +30,7 @@
   </header>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     <%# LEFT: stepper %>
-    <aside class="lg:col-span-3">
+    <aside class="lg:col-span-3 sticky top-1/6">
       <%# Placeholder keeps layout when panel becomes fixed %>
       <div class="hidden" data-program-show-target="stepperPlaceholder"></div>
       <div
@@ -49,7 +49,7 @@
           <ul class="steps steps-vertical w-full">
             <% @program.weeks.each_with_index do |week, idx| %>
               <li
-                class="step <%= idx == 0 ? "step-primary" : "" %>"
+                class="step"
                 data-program-show-target="weekStep"
                 data-target="week-<%= week.week_number %>">
                 <a
@@ -68,7 +68,9 @@
       </div>
     </aside>
     <%# RIGHT: content %>
-    <main class="lg:col-span-9 space-y-10">
+    <main
+      class="lg:col-span-9 space-y-10 lg:pr-3"
+      data-program-show-target="contentPane">
       <% @program.weeks.each do |week| %>
         <section
           id="week-<%= week.week_number %>"
@@ -131,13 +133,8 @@
     </main>
   </div>
   <%# Back to top %>
-  <button
-    type="button"
-    class="btn btn-primary btn-circle fixed bottom-6 right-6 shadow-md opacity-0 pointer-events-none transition-opacity duration-200"
-    data-program-show-target="backToTop"
-    data-action="program-show#backToTopClick"
-    aria-label="Back to top"
-    title="Back to top">
-    <i class="fa-solid fa-arrow-up text-sm"></i>
-  </button>
+  <%= link_to "#", class:"btn btn-primary btn-circle fixed bottom-12 right-12 shadow-md" do %>
+    <i class="fa-solid fa-arrow-up text-sm text-amber-50"></i>
+  <% end %>
+
 </div>
