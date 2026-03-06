@@ -10,6 +10,7 @@ Duration = number of weeks
 Analyze the equipment provided and use ONLY that equipment.
 If no relevant equipment is provided, generate a bodyweight-only program.
 Never invent additional equipment.
+Use the user's info (height, age, weight, gender) to adapt intensity, progression, recovery, and exercise difficulty.
 
 IMPORTANT:
 
@@ -85,7 +86,7 @@ Start your response with: {
     'exercises': [values],
     'final_sentence': value
   }
-} 
+}
 ]
 }
 "
