@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'about', to: 'pages#about', as: :about
   devise_for :users
 
   # Health check (généré par Rails)

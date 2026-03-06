@@ -42,14 +42,6 @@
       <div class="navbar-center hidden lg:flex">
 
         <ul class="menu menu-horizontal px-1 gap-2">
-
-          <li>
-            <a class="flex items-center gap-2 rounded-xl px-3 font-semibold tracking-wide uppercase text-sm opacity-90">
-              <i class="fa-solid fa-users text-xs opacity-70"></i>
-              Community
-            </a>
-          </li>
-
           <li>
             <details>
               <summary class="flex items-center gap-2 rounded-xl px-3 font-semibold tracking-wide uppercase text-sm opacity-90">
@@ -99,10 +91,10 @@
           </li>
 
           <li>
-            <a class="flex items-center gap-2 rounded-xl px-3 font-semibold tracking-wide uppercase text-sm opacity-90">
+              <%= link_to about_path, class: "flex items-center gap-2 rounded-xl px-3 font-semibold tracking-wide uppercase text-sm opacity-90" do %>
               <i class="fa-solid fa-circle-info text-xs opacity-70"></i>
-              À propos
-            </a>
+                À propos
+              <% end %>
           </li>
 
         </ul>
@@ -137,15 +129,16 @@
             <%= link_to "Login", new_user_session_path, class: "btn btn-ghost btn-sm" %>
       <% end %>
 
-        <div class="divider divider-horizontal mx-4"></div>
+        <label class="swap swap-rotate ms-3">
+  <!-- this hidden checkbox controls the state -->
+  <input type="checkbox" class="theme-controller" value="synthwave" />
 
-        <!-- Theme toggle -->
-        <label class="swap swap-rotate btn btn-ghost btn-circle">
-          <input type="checkbox" />
+  <!-- sun icon -->
+  <i class="swap-on fa-solid fa-sun text-md"></i>
 
-          <i class="swap-on fa-solid fa-sun text-sm"></i>
-          <i class="swap-off fa-solid fa-moon text-sm"></i>
-        </label>
+  <!-- moon icon -->
+<i class="swap-off fa-solid fa-moon text-md"></i>
+</label>
 
       </div>
 
