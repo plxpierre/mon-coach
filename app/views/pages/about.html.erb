@@ -1,0 +1,39 @@
+<div class="max-w-3xl mx-auto py-20 px-6">
+  <%# Header %>
+  <header class="mb-12">
+    <h1 class="text-4xl font-bold mb-4">About the Project</h1>
+    <div class="h-1 w-20 bg-primary"></div>
+  </header>
+
+  <%# Main Content %>
+  <div class="prose prose-lg opacity-90">
+    <p class="text-xl leading-relaxed mb-8">
+      <strong>Mon Coach</strong> is an AI-powered fitness platform designed to bridge the gap between complex sports science and daily training.
+    </p>
+
+    <div class="space-y-6">
+      <p>
+        The goal was simple: to create an intuitive interface where anyone can generate a <strong>fully personalized training program</strong> in seconds, tailored to their specific goals and constraints.
+      </p>
+
+      <div class="bg-base-200 p-8 rounded-2xl border border-base-300">
+        <h2 class="text-lg font-bold uppercase tracking-widest mb-4 text-primary">The Origin</h2>
+        <p class="text-sm leading-relaxed">
+          This site is a student project developed during an intensive <strong>2-month Full-Stack Web Development bootcamp at Le Wagon</strong>.
+          It showcases the ability to build a complete product—from database logic to AI integration—in a very short timeframe.
+        </p>
+      </div>
+
+      <p>
+        Whether you are into CrossFit, running, or swimming, our AI engine analyzes your needs to provide a structured path to performance. No fluff, just results.
+      </p>
+    </div>
+  </div>
+
+  <%# Simple CTA / Link %>
+  <div class="mt-16 pt-8 border-t border-base-300">
+    <%= link_to root_path, class: "btn btn-outline btn-primary rounded-xl" do %>
+      <i class="fa-solid fa-arrow-left mr-2"></i> Back to Training
+    <% end %>
+  </div>
+</div>
