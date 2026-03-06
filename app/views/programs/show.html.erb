@@ -1,5 +1,3 @@
-<%# app/views/programs/show.html.erb %>
-
 <div
   class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
   data-controller="program-show">
@@ -33,58 +31,51 @@
     </div>
   </header>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+  <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-start lg:h-[calc(100vh-10rem)]">
 
-    <%# LEFT: stepper %>
+    <%# LEFT: fixed/sticky visual panel %>
     <aside class="lg:col-span-3">
+      <div class="lg:sticky lg:top-28">
+        <div class="card bg-base-100 border border-base-300 shadow-sm max-h-[calc(100vh-12rem)] overflow-auto">
+          <div class="card-body p-5">
 
-      <%# Placeholder keeps layout when panel becomes fixed %>
-      <div class="hidden" data-program-show-target="stepperPlaceholder"></div>
-
-      <div
-        class="card bg-base-100 border border-base-300 shadow-sm
-               lg:sticky lg:top-28
-               max-h-[calc(100vh-8rem)] overflow-auto"
-        data-program-show-target="stepperPanel">
-
-        <div class="card-body p-5">
-
-          <div class="flex items-center justify-between mb-4">
-            <div class="font-semibold flex items-center gap-2">
-              <i class="fa-solid fa-layer-group opacity-70"></i>
-              Weeks
+            <div class="flex items-center justify-between mb-4">
+              <div class="font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-layer-group opacity-70"></i>
+                Weeks
+              </div>
+              <span class="badge badge-outline"><%= @program.weeks.size %></span>
             </div>
-            <span class="badge badge-outline"><%= @program.weeks.size %></span>
+
+            <ul class="steps steps-vertical w-full">
+              <% @program.weeks.each_with_index do |week, idx| %>
+                <li
+                  class="step <%= idx == 0 ? "step-primary" : "" %>"
+                  data-program-show-target="weekStep"
+                  data-target="week-<%= week.week_number %>">
+                  <a
+                    href="#week-<%= week.week_number %>"
+                    class="link link-hover font-semibold"
+                    data-action="program-show#jump">
+                    Week <%= week.week_number %>
+                  </a>
+                </li>
+              <% end %>
+            </ul>
+
+            <p class="text-xs opacity-70 mt-4">
+              Click a week to jump directly to it.
+            </p>
+
           </div>
-
-          <ul class="steps steps-vertical w-full">
-            <% @program.weeks.each_with_index do |week, idx| %>
-              <li
-                class="step <%= idx == 0 ? "step-primary" : "" %>"
-                data-program-show-target="weekStep"
-                data-target="week-<%= week.week_number %>">
-
-                <a
-                  href="#week-<%= week.week_number %>"
-                  class="link link-hover font-semibold"
-                  data-action="program-show#jump">
-                  Week <%= week.week_number %>
-                </a>
-
-              </li>
-            <% end %>
-          </ul>
-
-          <p class="text-xs opacity-70 mt-4">
-            This panel follows your scroll. Click a week to jump.
-          </p>
-
         </div>
       </div>
     </aside>
 
-    <%# RIGHT: content %>
-    <main class="lg:col-span-9 space-y-10">
+    <%# RIGHT: the only scrollable pane on desktop %>
+    <main
+      class="lg:col-span-9 space-y-10 lg:h-[calc(100vh-10rem)] lg:overflow-y-auto lg:pr-3 scroll-smooth"
+      data-program-show-target="contentPane">
 
       <% @program.weeks.each do |week| %>
         <section
@@ -147,17 +138,18 @@
       <% end %>
 
     </main>
-  </div>
 
-  <%# Back to top %>
-  <button
-    type="button"
-    class="btn btn-primary btn-circle fixed bottom-6 right-6 shadow-md opacity-0 pointer-events-none transition-opacity duration-200"
-    data-program-show-target="backToTop"
-    data-action="program-show#backToTopClick"
-    aria-label="Back to top"
-    title="Back to top">
-    <i class="fa-solid fa-arrow-up text-sm"></i>
-  </button>
+    <%# Back to top button: higher + more left %>
+    <button
+      type="button"
+      class="btn btn-primary btn-circle fixed lg:absolute bottom-20 right-2 lg:bottom-8 lg:right-2 shadow-md opacity-0 pointer-events-none transition-opacity duration-200 z-20"
+      data-program-show-target="backToTop"
+      data-action="program-show#backToTopClick"
+      aria-label="Back to top"
+      title="Back to top">
+      <i class="fa-solid fa-arrow-up text-sm"></i>
+    </button>
+
+  </div>
 
 </div>
