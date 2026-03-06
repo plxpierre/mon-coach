@@ -92,7 +92,7 @@ Start your response with: {
 "
 
   def index
-    @programs = Program.all
+    @programs = Program.where(user: current_user)
   end
 
   def show
