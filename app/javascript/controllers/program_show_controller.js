@@ -1,79 +1,38 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["contentPane", "backToTop", "weekStep", "weekSection"]
+  static targets = ["contentPane", "backToTop", "weekStep", "weekSection"];
+
 
   connect() {
-    this.handleScroll = this.handleScroll.bind(this)
+    // Crée l'observer
+    this.observer = new IntersectionObserver(
+      (entries) => this.handleIntersect(entries),
+      {
+        root: null, // null = viewport
+        threshold: 0.5, // déclenche quand 10% de l'élément est visible
+      },
+    );
 
-    if (this.hasContentPaneTarget) {
-      this.contentPaneTarget.addEventListener("scroll", this.handleScroll, { passive: true })
-    }
-
-    this.highlightCurrentWeek()
-    this.toggleBackToTop()
+    // Observe chaque target
+    this.weekSectionTargets.forEach((section) =>
+      this.observer.observe(section),
+    );
   }
 
-  disconnect() {
-    if (this.hasContentPaneTarget) {
-      this.contentPaneTarget.removeEventListener("scroll", this.handleScroll)
-    }
-  }
-
-  handleScroll() {
-    this.highlightCurrentWeek()
-    this.toggleBackToTop()
-  }
-
-  jump(event) {
-    event.preventDefault()
-
-    const id = event.currentTarget.getAttribute("href")
-    const target = this.weekSectionTargets.find((section) => `#${section.id}` === id)
-
-    if (!target || !this.hasContentPaneTarget) return
-
-    this.contentPaneTarget.scrollTo({
-      top: target.offsetTop - 16,
-      behavior: "smooth"
-    })
-  }
-
-  highlightCurrentWeek() {
-    if (!this.hasContentPaneTarget || this.weekSectionTargets.length === 0) return
-
-    const scrollTop = this.contentPaneTarget.scrollTop
-    const offset = 475
-
-    let currentId = this.weekSectionTargets[0].id
-
-    this.weekSectionTargets.forEach((section) => {
-      if (scrollTop + offset >= section.offsetTop) {
-        currentId = section.id
+  handleIntersect(entries) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        this.weekStepTargets.forEach((step) => {
+          if (step.dataset.target < entry.target.id) { return }
+          const isActive = step.dataset.target === entry.target.id;
+          step.classList.toggle("step-primary", isActive);
+        });
+        // Tu peux déclencher une action ici, ex: ajouter une classe
+        // entry.target.classList.add("visible");
+      } else {
+        // entry.target.classList.remove("visible");
       }
-    })
-
-    this.weekStepTargets.forEach((step) => {
-      const isActive = step.dataset.target === currentId
-      step.classList.toggle("step-primary", isActive)
-    })
-  }
-
-  toggleBackToTop() {
-    if (!this.hasContentPaneTarget || !this.hasBackToTopTarget) return
-
-    const show = this.contentPaneTarget.scrollTop > 300
-
-    this.backToTopTarget.classList.toggle("opacity-0", !show)
-    this.backToTopTarget.classList.toggle("pointer-events-none", !show)
-  }
-
-  backToTopClick() {
-    if (!this.hasContentPaneTarget) return
-
-    this.contentPaneTarget.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    })
+    });
   }
 }

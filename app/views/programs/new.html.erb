@@ -1,6 +1,5 @@
-<h1 class="text-3xl font-bold mb-6">Create a program</h1>
-
 <div class="max-w-4xl mx-auto mb-20">
+  <h1 class="text-3xl font-bold mb-6">Create a program</h1>
   <!-- Form card -->
   <div class="lg:col-span-2">
     <div class="card bg-base-100 shadow-xl border border-base-300">
@@ -9,10 +8,8 @@
           <h2 class="card-title">Program details</h2>
           <span class="badge badge-outline">Setup</span>
         </div>
-
-        <%= form_with model: @program, local: true do |f| %>
+        <%= simple_form_for @program do |f| %>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-
             <!-- Weeks -->
             <div class="form-control">
               <%= f.label :number_of_week, "Duration (weeks)", class: "label" %>
@@ -30,7 +27,6 @@
                 <span class="label-text-alt opacity-70">Choose between 1 and 18 weeks.</span>
               </label>
             </div>
-
             <!-- Level -->
             <div class="form-control">
               <%= f.label :level, "Level", class: "label" %>
@@ -41,7 +37,6 @@
                 <%= f.select :level, Program::LEVELS, {}, class: "join-item select select-bordered w-full" %>
               </div>
             </div>
-
             <!-- Sport -->
             <div class="form-control md:col-span-2">
               <%= f.label :sport, "Sport", class: "label" %>
@@ -52,18 +47,12 @@
                 <%= f.select :sport, Program::SPORTS, {}, class: "join-item select select-bordered w-full" %>
               </div>
             </div>
-
             <!-- Goal -->
             <div class="form-control md:col-span-2">
               <%= f.label :goal, "Goal", class: "label" %>
-              <label class="input input-bordered flex items-center gap-2 w-full">
-                <i class="fa-solid fa-bullseye opacity-70"></i>
-                <span class="opacity-60 text-sm">Describe the main outcome</span>
-              </label>
-              <%= f.text_area :goal, rows: 3, class: "textarea textarea-bordered w-full mt-2",
+              <%= f.text_area :goal, rows: 3, class: "textarea textarea-bordered w-full",
                     placeholder: "Example: Improve endurance and swim technique in 8 weeks." %>
             </div>
-
             <!-- Tools -->
             <div class="form-control">
               <%= f.label :tools, "Tools", class: "label" %>
@@ -73,7 +62,6 @@
                 <span class="label-text-alt opacity-70">Put “none” if no equipment needed.</span>
               </label>
             </div>
-
             <!-- Medical -->
             <div class="form-control">
               <%= f.label :medical_conditions, "Medical conditions", class: "label" %>
@@ -84,14 +72,11 @@
               </label>
             </div>
           </div>
-
           <div class="divider my-6"></div>
-
           <div class="flex items-center justify-between">
             <a class="btn btn-ghost" href="javascript:history.back()">
               Cancel
             </a>
-
             <%= f.submit "Create program",
                   class: "btn btn-primary px-8" %>
           </div>
@@ -99,5 +84,4 @@
       </div>
     </div>
   </div>
-
-  <!-- Preview card (optional but very “app”) -->
+</div>
