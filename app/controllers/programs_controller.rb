@@ -10,6 +10,7 @@ Duration = number of weeks
 Analyze the equipment provided and use ONLY that equipment.
 If no relevant equipment is provided, generate a bodyweight-only program.
 Never invent additional equipment.
+Use the user's info (height, age, weight, gender) to adapt intensity, progression, recovery, and exercise difficulty.
 
 IMPORTANT:
 
@@ -19,18 +20,17 @@ Each week must contain exactly the number of sessions adapted to the goal.
 
 Each session must be a string in Markdown format with:
 
-A title formatted as: '### Day: Session Name'
-
 A short introductory paragraph describing the session.
 
-A bullet list of the exercises and sequence.
+A list of the exercises and sequence.
 
 A final sentence explaining the purpose of the session.
 
 Adapt intensity, progression, and exercises to the provided level and constraints.
 
-Must be a valid JSON
+Must be a valid parsable JSON
 week_program must be an array
+Return the exercises strictly as a list.
 Expected structure:
 Start your response with: {
 
@@ -40,18 +40,52 @@ Start your response with: {
 {
 'week_number': 1,
 'week_program': [
-'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
-'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
-'### **Friday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...'
-]
-},
+  {
+    'day': 'Monday',
+    'session_name': value,
+    'description': value,
+    'exercises': [values],
+    'final_sentence': value
+  },
+    {
+    'day': 'Wednesday',
+    'session_name': value,
+    'description': value,
+    'exercises': [values],
+    'final_sentence': value
+  },
+    {
+    'day': 'Friday',
+    'session_name': value,
+    'description': value,
+    'exercises': [values],
+    'final_sentence': value
+  }
+}
 {
 'week_number': 2,
 'week_program': [
-'### **Monday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
-'### **Wednesday: Session Name**\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...',
-'### Friday: Session Name\n\n**Description**...\n\n**Exercises :**\n-...\n\nFinal sentence  ...'
-]
+  {
+    'day': 'Monday',
+    'session_name': value,
+    'description': value,
+    'exercises': [values],
+    'final_sentence': value
+  },
+    {
+    'day': 'Wednesday',
+    'session_name': value,
+    'description': value,
+    'exercises': [values],
+    'final_sentence': value
+  },
+    {
+    'day': 'Friday',
+    'session_name': value,
+    'description': value,
+    'exercises': [values],
+    'final_sentence': value
+  }
 }
 ]
 }
